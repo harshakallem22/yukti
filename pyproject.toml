@@ -1,0 +1,74 @@
+[project]
+name = "yukti"
+version = "0.1.0"
+description = "Agentic software engineering platform: investigates repositories, proposes patches, validates them under guardrails."
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.8",
+    "pydantic-settings>=2.4",
+    "langgraph>=0.2.28",
+    "langgraph-checkpoint-sqlite>=2.0",
+    "openai>=1.40",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "sqlalchemy>=2.0",
+    "mcp>=1.0",
+]
+
+[project.optional-dependencies]
+postgres = ["psycopg[binary]>=3.2"]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23", "ruff>=0.6", "mypy>=1.11", "httpx>=0.27"]
+
+[tool.setuptools]
+# `mcp` is deliberately absent: the official MCP SDK owns that import name, so our
+# server/client live in `yukti_mcp` to avoid shadowing it.
+packages = ["core", "agent", "agent.providers", "agent.prompts", "tools", "guardrails",
+            "sandbox", "evals", "yukti_mcp", "apps", "apps.api", "apps.api.app"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [".venv", "benchmarks", "apps/web"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "S"]
+ignore = [
+    # S603 flags every subprocess call; our defense is shell=False plus the
+    # command allowlist in guardrails/commands.py, which S603 cannot see.
+    "S603",
+    # S607 wants absolute paths for `git`. Hardcoding one breaks across macOS,
+    # Linux and containers; git is resolved through the PATH we construct, and
+    # argv[0] is never attacker-controlled at these call sites.
+    "S607",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S108"]
+"evals/**" = ["S101"]
+"scripts/**" = ["S101"]
+# B008 fires on FastAPI's `Depends()` in defaults, which is the framework's
+# documented dependency-injection idiom, not an accidental shared mutable.
+"apps/api/app/main.py" = ["B008"]
+
+[tool.mypy]
+# Package roots are the repo root, so `agent/providers/base.py` resolves as
+# `agent.providers.base` rather than being discovered twice.
+mypy_path = "."
+explicit_package_bases = true
+namespace_packages = true
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+exclude = ["^benchmarks/", "^\\.venv/"]
+
+[[tool.mypy.overrides]]
+module = ["langgraph.*", "mcp.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+markers = [
+    "security: guardrail and isolation tests that must never be skipped",
+    "llm: requires a live model provider key; excluded from CI",
+]
