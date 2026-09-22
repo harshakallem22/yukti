@@ -1,0 +1,49 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+
+# Agent runtime artifacts
+# Sandbox workspaces are disposable clones; never version them.
+.yukti/
+workspaces/
+
+# Local databases. Run and evaluation history is machine-local state, not source.
+*.db
+*.db-journal
+*.sqlite3
+
+# Generated reports are ignored by default, but the measured baseline results are
+# committed as evidence for the numbers quoted in the README (force-added).
+evals/reports/*.json
+evals/reports/*.md
+!evals/reports/.gitkeep
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Private working notes: interview preparation and internal engineering docs.
+docs/
