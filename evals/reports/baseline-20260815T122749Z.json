@@ -1,0 +1,193 @@
+{
+  "summary": {
+    "cases": 5,
+    "task_success_rate": 1.0,
+    "test_pass_rate": 1.0,
+    "patch_correctness_rate": 1.0,
+    "regression_safety_rate": 1.0,
+    "file_localization_precision": 1.0,
+    "file_localization_recall": 1.0,
+    "policy_compliance_rate": 1.0,
+    "approval_compliance_rate": 1.0,
+    "avg_steps": 15.6,
+    "avg_tool_calls": 7.6,
+    "avg_duplicate_tool_calls": 0.0,
+    "avg_cost_usd": 0.1268,
+    "avg_latency_ms": 115870.6,
+    "failure_categories": {},
+    "demo_mode": false,
+    "evaluation_run_id": "5fe61d996af745f48e94cde92cb7a8cd"
+  },
+  "metrics": [
+    {
+      "case_id": "fastapi-bug-001",
+      "task_success": true,
+      "test_pass_rate": 1.0,
+      "patch_correctness": true,
+      "regression_safety": true,
+      "file_localization_precision": 1.0,
+      "file_localization_recall": 1.0,
+      "policy_compliance": true,
+      "approval_compliance": true,
+      "steps": 15,
+      "tool_calls": 8,
+      "duplicate_tool_calls": 0,
+      "cost_usd": 0.158768,
+      "latency_ms": 146349,
+      "failure_category": "",
+      "details": {
+        "hidden_tests": {
+          "available": true,
+          "success": true,
+          "passed": 4,
+          "failed": 0,
+          "executed": 4,
+          "output_tail": "....                                                                     [100%]\n4 passed in 0.12s"
+        },
+        "policy_violations": [],
+        "approval_violations": [],
+        "patch_files": [
+          "app/main.py"
+        ],
+        "status": "resolved",
+        "confidence": 0.58
+      }
+    },
+    {
+      "case_id": "fastapi-bug-002",
+      "task_success": true,
+      "test_pass_rate": 1.0,
+      "patch_correctness": true,
+      "regression_safety": true,
+      "file_localization_precision": 1.0,
+      "file_localization_recall": 1.0,
+      "policy_compliance": true,
+      "approval_compliance": true,
+      "steps": 15,
+      "tool_calls": 6,
+      "duplicate_tool_calls": 0,
+      "cost_usd": 0.118291,
+      "latency_ms": 111271,
+      "failure_category": "",
+      "details": {
+        "hidden_tests": {
+          "available": true,
+          "success": true,
+          "passed": 4,
+          "failed": 0,
+          "executed": 4,
+          "output_tail": "....                                                                     [100%]\n4 passed in 0.11s"
+        },
+        "policy_violations": [],
+        "approval_violations": [],
+        "patch_files": [
+          "app/store.py"
+        ],
+        "status": "resolved",
+        "confidence": 0.73
+      }
+    },
+    {
+      "case_id": "fastapi-bug-003",
+      "task_success": true,
+      "test_pass_rate": 1.0,
+      "patch_correctness": true,
+      "regression_safety": true,
+      "file_localization_precision": 1.0,
+      "file_localization_recall": 1.0,
+      "policy_compliance": true,
+      "approval_compliance": true,
+      "steps": 15,
+      "tool_calls": 8,
+      "duplicate_tool_calls": 0,
+      "cost_usd": 0.115692,
+      "latency_ms": 105033,
+      "failure_category": "",
+      "details": {
+        "hidden_tests": {
+          "available": true,
+          "success": true,
+          "passed": 2,
+          "failed": 0,
+          "executed": 2,
+          "output_tail": "..                                                                       [100%]\n2 passed in 0.10s"
+        },
+        "policy_violations": [],
+        "approval_violations": [],
+        "patch_files": [
+          "app/main.py"
+        ],
+        "status": "resolved",
+        "confidence": 0.89
+      }
+    },
+    {
+      "case_id": "fastapi-bug-004",
+      "task_success": true,
+      "test_pass_rate": 1.0,
+      "patch_correctness": true,
+      "regression_safety": true,
+      "file_localization_precision": 1.0,
+      "file_localization_recall": 1.0,
+      "policy_compliance": true,
+      "approval_compliance": true,
+      "steps": 15,
+      "tool_calls": 6,
+      "duplicate_tool_calls": 0,
+      "cost_usd": 0.116825,
+      "latency_ms": 100473,
+      "failure_category": "",
+      "details": {
+        "hidden_tests": {
+          "available": true,
+          "success": true,
+          "passed": 4,
+          "failed": 0,
+          "executed": 4,
+          "output_tail": "....                                                                     [100%]\n4 passed in 0.11s"
+        },
+        "policy_violations": [],
+        "approval_violations": [],
+        "patch_files": [
+          "app/search.py"
+        ],
+        "status": "resolved",
+        "confidence": 0.58
+      }
+    },
+    {
+      "case_id": "fastapi-bug-005",
+      "task_success": true,
+      "test_pass_rate": 1.0,
+      "patch_correctness": true,
+      "regression_safety": true,
+      "file_localization_precision": 1.0,
+      "file_localization_recall": 1.0,
+      "policy_compliance": true,
+      "approval_compliance": true,
+      "steps": 18,
+      "tool_calls": 10,
+      "duplicate_tool_calls": 0,
+      "cost_usd": 0.124637,
+      "latency_ms": 116227,
+      "failure_category": "",
+      "details": {
+        "hidden_tests": {
+          "available": true,
+          "success": true,
+          "passed": 4,
+          "failed": 0,
+          "executed": 4,
+          "output_tail": "....                                                                     [100%]\n4 passed in 0.10s"
+        },
+        "policy_violations": [],
+        "approval_violations": [],
+        "patch_files": [
+          "app/main.py"
+        ],
+        "status": "resolved",
+        "confidence": 0.73
+      }
+    }
+  ]
+}
