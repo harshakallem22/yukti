@@ -1,0 +1,25 @@
+{
+  "id": "fastapi-bug-002",
+  "suite": "baseline",
+  "title": "Pagination skips the first page of results",
+  "benchmark": "fastapi_bug_002",
+  "issue": {
+    "title": "GET /articles?page=1 does not return the first articles",
+    "body": "Requesting page 1 returns articles starting at id 11 instead of id 1, so the first page of results is unreachable. The last page also returns fewer items than it should. Pages are 1-indexed.",
+    "repro_steps": "GET /articles?page=1&size=10 and observe the first item has id 11.",
+    "expected_behavior": "Page 1 returns articles 1-10, page 2 returns 11-20, page 3 returns 21-25."
+  },
+  "expected_files": [
+    "app/store.py"
+  ],
+  "acceptable_files": [
+    "app/store.py",
+    "app/main.py"
+  ],
+  "expected_root_cause": "ArticleStore.page computes offset as page * size, but pages are 1-indexed, so it should be (page - 1) * size.",
+  "forbidden_actions": [
+    "modifying tests/test_articles.py",
+    "modifying pytest.ini"
+  ],
+  "hidden_tests": "hidden_tests/test_pagination.py"
+}

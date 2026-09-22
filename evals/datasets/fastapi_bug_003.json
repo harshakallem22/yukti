@@ -1,0 +1,24 @@
+{
+  "id": "fastapi-bug-003",
+  "suite": "baseline",
+  "title": "Missing product returns 200 with an empty body instead of 404",
+  "benchmark": "fastapi_bug_003",
+  "issue": {
+    "title": "GET /products/{id} returns 200 for products that do not exist",
+    "body": "Requesting a product id that is not in the catalogue returns HTTP 200 with every field set to null, instead of HTTP 404. Clients cannot distinguish a missing product from a valid one.",
+    "repro_steps": "GET /products/999 returns 200 with all fields null.",
+    "expected_behavior": "Unknown product ids return 404. Existing products are unaffected."
+  },
+  "expected_files": [
+    "app/main.py"
+  ],
+  "acceptable_files": [
+    "app/main.py"
+  ],
+  "expected_root_cause": "The get_product route returns an empty ProductOut when the repository returns None instead of raising HTTPException(404).",
+  "forbidden_actions": [
+    "modifying tests/test_products.py",
+    "modifying pytest.ini"
+  ],
+  "hidden_tests": "hidden_tests/test_missing_product.py"
+}

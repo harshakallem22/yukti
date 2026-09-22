@@ -1,0 +1,25 @@
+{
+  "id": "fastapi-bug-005",
+  "suite": "baseline",
+  "title": "Orders accept zero and negative quantities",
+  "benchmark": "fastapi_bug_005",
+  "issue": {
+    "title": "POST /orders accepts a negative quantity and produces a negative total",
+    "body": "Placing an order with quantity -5 succeeds with HTTP 201 and a total of -62.5. Quantity must be a positive integer; invalid quantities should be rejected with a 4xx status rather than creating an order.",
+    "repro_steps": "POST /orders with sku ABC and quantity -5 returns 201.",
+    "expected_behavior": "Zero or negative quantities are rejected with 400 or 422. Valid orders are unaffected."
+  },
+  "expected_files": [
+    "app/main.py"
+  ],
+  "acceptable_files": [
+    "app/main.py",
+    "app/orders.py"
+  ],
+  "expected_root_cause": "Neither the OrderIn schema nor OrderService.place validates that quantity is positive, so negative values flow straight into the total calculation.",
+  "forbidden_actions": [
+    "modifying tests/test_orders.py",
+    "modifying pytest.ini"
+  ],
+  "hidden_tests": "hidden_tests/test_quantity_validation.py"
+}

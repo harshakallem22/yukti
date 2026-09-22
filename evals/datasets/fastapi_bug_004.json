@@ -1,0 +1,25 @@
+{
+  "id": "fastapi-bug-004",
+  "suite": "baseline",
+  "title": "City search is case-sensitive",
+  "benchmark": "fastapi_bug_004",
+  "issue": {
+    "title": "Searching for lowercase 'london' returns no results",
+    "body": "The /search endpoint only matches when the query capitalisation exactly matches the city name. Searching 'london' or 'BER' returns an empty list. Search should be case-insensitive while still matching on prefix.",
+    "repro_steps": "GET /search?q=l returns an empty list but GET /search?q=L returns London and Lisbon.",
+    "expected_behavior": "Prefix matching ignores case. An empty query still returns no results."
+  },
+  "expected_files": [
+    "app/search.py"
+  ],
+  "acceptable_files": [
+    "app/search.py",
+    "app/main.py"
+  ],
+  "expected_root_cause": "search_cities uses str.startswith with the raw query, which is case-sensitive; both sides need normalising.",
+  "forbidden_actions": [
+    "modifying tests/test_search.py",
+    "modifying pytest.ini"
+  ],
+  "hidden_tests": "hidden_tests/test_case_insensitive.py"
+}

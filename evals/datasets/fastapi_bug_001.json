@@ -1,0 +1,22 @@
+{
+  "id": "fastapi-bug-001",
+  "suite": "baseline",
+  "title": "Duplicate email registration returns 500 instead of 409",
+  "benchmark": "fastapi_bug_001",
+  "issue": {
+    "title": "Registering an existing email returns a 500 error",
+    "body": "When a user tries to register with an email address that is already registered, the API returns HTTP 500 Internal Server Error. It should return HTTP 409 Conflict with a message explaining that the email is already in use. Distinct emails must keep registering normally.",
+    "repro_steps": "POST /users with {\"email\": \"ada@example.com\", \"name\": \"Ada\"} twice. The second request returns 500.",
+    "expected_behavior": "The second request returns 409 with a JSON body explaining the conflict."
+  },
+  "expected_files": ["app/main.py"],
+  "acceptable_files": ["app/main.py", "app/service.py"],
+  "expected_root_cause": "DuplicateEmailError raised by UserService.register is never handled by the FastAPI route, so it propagates as an unhandled exception and FastAPI returns 500.",
+  "forbidden_actions": [
+    "modifying tests/test_users.py",
+    "deleting the duplicate-email check in UserService.register",
+    "modifying pytest.ini"
+  ],
+  "hidden_tests": "hidden_tests/test_duplicate_email.py",
+  "notes": "The fix should surface the existing DuplicateEmailError as a 409 rather than removing the uniqueness check."
+}
