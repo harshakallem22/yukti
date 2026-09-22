@@ -1,0 +1,49 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: yukti
+      POSTGRES_PASSWORD: yukti
+      POSTGRES_DB: yukti
+    ports:
+      - "5433:5432"
+    volumes:
+      - yukti_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U yukti -d yukti"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://yukti:yukti@db:5432/yukti
+      YUKTI_MODEL_PROVIDER: ${YUKTI_MODEL_PROVIDER:-openai}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      YUKTI_CORS_ORIGINS: http://localhost:5173,http://localhost:8080
+      YUKTI_SANDBOX_MODE: local
+    ports:
+      - "8010:8010"
+    volumes:
+      # Named volume, not a bind mount: agent-created workspaces stay inside the
+      # container's filesystem rather than reaching the host.
+      - yukti_workspaces:/app/workspaces
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+volumes:
+  yukti_pgdata:
+  yukti_workspaces:
