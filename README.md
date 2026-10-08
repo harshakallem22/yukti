@@ -114,9 +114,6 @@ flowchart LR
 Every path from the runtime to the filesystem passes through the controller. There is no bypass —
 that invariant is what the security suite verifies.
 
-Every path from the runtime to the filesystem passes through the controller, and the security
-suite verifies there is no bypass.
-
 ## Design decisions
 
 The seven choices worth defending, and why:
